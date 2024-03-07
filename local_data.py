@@ -22,7 +22,7 @@ async def send_trafic_details():
     print(f"local area indication: {data}")
     return data
 
-@app.get("/init")
+@app.post("/init")
 async def set_service_endpoint(data: dict):
     global redis_host
     redis_host = data["db_endpoint"]
