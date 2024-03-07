@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localdata-deployment
+  labels:
+    app: localdata
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      app: localdata
+  template:
+    metadata:
+      labels:
+        app: localdata
+    spec:
+      imagePullSecrets:
+      - name: repo-key
+      containers:
+      - name: localdata
+        image: {{ .Values.app.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.app.port }}

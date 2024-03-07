@@ -6,7 +6,7 @@ import os
 data={}
 
 #Data base stroring Trafic details
-redis_host = os.environ.get('DATABASE_URL')
+redis_host = ""
 redis_port = "6379"
 r = redis.StrictRedis(host=redis_host, port=redis_port, decode_responses=True)
 
@@ -21,6 +21,13 @@ async def send_trafic_details():
         data[item] = r.get(item)
     print(f"local area indication: {data}")
     return data
+
+@app.get("/init")
+async def set_service_endpoint(data: dict):
+    global redis_host
+    redis_host = data["db_endpoint"]
+    print(f"Endpoints initialisation Done")
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
