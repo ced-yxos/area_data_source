@@ -24,7 +24,7 @@ async def send_trafic_details():
 
 @app.post("/init")
 async def set_service_endpoint(data: dict):
-    global redis_host
+    global redis_host, r
     redis_host = data["db_endpoint"]
     print(f"Endpoints initialisation Done")
 
